@@ -455,12 +455,20 @@ var ReactSwipe = function (_Component) {
   }, {
     key: 'next',
     value: function next() {
-      this.swipe.next();
+      var self = this;
+      setTimeout(function () {
+        console.log('timeout next');
+        self.swipe.next();
+      }, 0);
     }
   }, {
     key: 'prev',
     value: function prev() {
-      this.swipe.prev();
+      var self = this;
+      setTimeout(function () {
+        console.log('timeout prev');
+        self.swipe.prev();
+      }, 0);
     }
   }, {
     key: 'slide',

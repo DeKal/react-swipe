@@ -72,11 +72,19 @@ class ReactSwipe extends Component {
   }
 
   next() {
-    this.swipe.next();
+    const self = this;
+    setTimeout(function() {
+      console.log('timeout next');
+      self.swipe.next();
+    }, 0);
   }
 
   prev() {
-    this.swipe.prev();
+    const self = this;
+    setTimeout(function() {
+      console.log('timeout prev');
+      self.swipe.prev();
+    }, 0);
   }
 
   slide(...args) {
