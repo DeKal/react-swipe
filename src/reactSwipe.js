@@ -23,7 +23,7 @@ class ReactSwipe extends Component {
     }),
     id: PropTypes.string,
     className: PropTypes.string,
-    childCount: PropTypes.number
+    swipeKey: PropTypes.string
   };
 
   static defaultProps = {
@@ -48,7 +48,7 @@ class ReactSwipe extends Component {
       }
     },
     className: '',
-    childCount: 0
+    swipeKey: null
   };
 
   componentDidMount() {
@@ -58,11 +58,11 @@ class ReactSwipe extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { childCount, swipeOptions } = this.props;
+    const { swipeKey } = this.props;
 
-    if (prevProps.childCount !== childCount) {
-      this.swipe.kill();
-      this.swipe = Swipe(this.container, swipeOptions);
+    if (prevProps.swipeKey !== swipeKey) {
+      // just setup again
+      this.swipe.setup();
     }
   }
 
@@ -72,19 +72,11 @@ class ReactSwipe extends Component {
   }
 
   next() {
-    const self = this;
-    setTimeout(function() {
-      console.log('timeout next');
-      self.swipe.next();
-    }, 0);
+    setTimeout(this.swipe.next, 0);
   }
 
   prev() {
-    const self = this;
-    setTimeout(function() {
-      console.log('timeout prev');
-      self.swipe.prev();
-    }, 0);
+    setTimeout(this.swipe.prev, 0);
   }
 
   slide(...args) {
@@ -103,18 +95,25 @@ class ReactSwipe extends Component {
     const { id, className, style, children } = this.props;
 
     return (
-      <div ref={container => this.container = container} id={id} className={`react-swipe-container ${className}`} style={style.container}>
+      <div
+        ref={el => {
+          this.container = el;
+        }}
+        id={id}
+        className={`react-swipe-container ${className}`}
+        style={style.container}
+      >
         <div style={style.wrapper}>
-          {React.Children.map(children, (child) => {
+          {React.Children.map(children, child => {
             if (!child) {
               return null;
             }
 
-            const childStyle = child.props.style ?
-              objectAssign({}, style.child, child.props.style) :
-              style.child;
+            const childStyle = child.props.style
+              ? objectAssign({}, style.child, child.props.style)
+              : style.child;
 
-            return React.cloneElement(child, {style: childStyle});
+            return React.cloneElement(child, { style: childStyle });
           })}
         </div>
       </div>

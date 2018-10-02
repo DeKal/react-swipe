@@ -436,14 +436,12 @@ var ReactSwipe = function (_Component) {
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps) {
-      var _props = this.props,
-          childCount = _props.childCount,
-          swipeOptions = _props.swipeOptions;
+      var swipeKey = this.props.swipeKey;
 
 
-      if (prevProps.childCount !== childCount) {
-        this.swipe.kill();
-        this.swipe = (0, _swipeJsIso2.default)(this.container, swipeOptions);
+      if (prevProps.swipeKey !== swipeKey) {
+        // just setup again
+        this.swipe.setup();
       }
     }
   }, {
@@ -455,20 +453,12 @@ var ReactSwipe = function (_Component) {
   }, {
     key: 'next',
     value: function next() {
-      var self = this;
-      setTimeout(function () {
-        console.log('timeout next');
-        self.swipe.next();
-      }, 0);
+      setTimeout(this.swipe.next, 0);
     }
   }, {
     key: 'prev',
     value: function prev() {
-      var self = this;
-      setTimeout(function () {
-        console.log('timeout prev');
-        self.swipe.prev();
-      }, 0);
+      setTimeout(this.swipe.prev, 0);
     }
   }, {
     key: 'slide',
@@ -492,18 +482,23 @@ var ReactSwipe = function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      var _props2 = this.props,
-          id = _props2.id,
-          className = _props2.className,
-          style = _props2.style,
-          children = _props2.children;
+      var _props = this.props,
+          id = _props.id,
+          className = _props.className,
+          style = _props.style,
+          children = _props.children;
 
 
       return _react2.default.createElement(
         'div',
-        { ref: function ref(container) {
-            return _this2.container = container;
-          }, id: id, className: 'react-swipe-container ' + className, style: style.container },
+        {
+          ref: function ref(el) {
+            _this2.container = el;
+          },
+          id: id,
+          className: 'react-swipe-container ' + className,
+          style: style.container
+        },
         _react2.default.createElement(
           'div',
           { style: style.wrapper },
@@ -543,7 +538,7 @@ ReactSwipe.propTypes = {
   }),
   id: _propTypes2.default.string,
   className: _propTypes2.default.string,
-  childCount: _propTypes2.default.number
+  swipeKey: _propTypes2.default.string
 };
 ReactSwipe.defaultProps = {
   swipeOptions: {},
@@ -567,7 +562,7 @@ ReactSwipe.defaultProps = {
     }
   },
   className: '',
-  childCount: 0
+  swipeKey: null
 };
 exports.default = ReactSwipe;
 module.exports = exports['default'];
