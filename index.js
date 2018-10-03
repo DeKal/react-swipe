@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _propTypes = require('prop-types');
@@ -18,11 +20,9 @@ var _swipeJsIso = require('swipe-js-iso');
 
 var _swipeJsIso2 = _interopRequireDefault(_swipeJsIso);
 
-var _objectAssign = require('object-assign');
-
-var _objectAssign2 = _interopRequireDefault(_objectAssign);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -50,10 +50,12 @@ var ReactSwipe = function (_Component) {
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps) {
-      var swipeKey = this.props.swipeKey;
+      var _props = this.props,
+          swipeKey = _props.swipeKey,
+          children = _props.children;
 
 
-      if (prevProps.swipeKey !== swipeKey) {
+      if (prevProps.swipeKey !== swipeKey || children.length == 2 && prevProps.children !== children) {
         // just setup again
         this.swipe.setup();
       }
@@ -92,15 +94,44 @@ var ReactSwipe = function (_Component) {
       return this.swipe.getNumSlides();
     }
   }, {
+    key: 'renderChildren',
+    value: function renderChildren() {
+      var _props2 = this.props,
+          children = _props2.children,
+          style = _props2.style;
+
+
+      if (!children) {
+        return null;
+      }
+
+      var childCount = children.length;
+      var allChildren = children;
+
+      if (childCount === 2) {
+        // special case, we dupplicate the children to avoid outdated cloning in swipe.js
+        allChildren = [].concat(_toConsumableArray(children), _toConsumableArray(children));
+      }
+
+      return _react2.default.Children.map(allChildren, function (child) {
+        if (!child) {
+          return null;
+        }
+
+        return _react2.default.cloneElement(child, {
+          style: _extends({}, style.child, child.props.style)
+        });
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
-      var _props = this.props,
-          id = _props.id,
-          className = _props.className,
-          style = _props.style,
-          children = _props.children;
+      var _props3 = this.props,
+          id = _props3.id,
+          className = _props3.className,
+          style = _props3.style;
 
 
       return _react2.default.createElement(
@@ -116,15 +147,7 @@ var ReactSwipe = function (_Component) {
         _react2.default.createElement(
           'div',
           { style: style.wrapper },
-          _react2.default.Children.map(children, function (child) {
-            if (!child) {
-              return null;
-            }
-
-            var childStyle = child.props.style ? (0, _objectAssign2.default)({}, style.child, child.props.style) : style.child;
-
-            return _react2.default.cloneElement(child, { style: childStyle });
-          })
+          this.renderChildren()
         )
       );
     }

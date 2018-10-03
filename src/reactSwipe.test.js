@@ -69,7 +69,7 @@ describe('ReactSwipe', () => {
 
     expect(div.outerHTML).toMatchSnapshot();
 
-    // 2 elements is dupplicated
+    // 2 elements are dupplicated
     expect(div.querySelectorAll('img[alt="img1"]').length).toBe(2);
     expect(div.querySelectorAll('img[alt="img2"]').length).toBe(2);
   });
@@ -96,7 +96,7 @@ describe('ReactSwipe', () => {
         const { src } = this.props;
         const { loaded } = this.state;
 
-        // XXX the component should have a wrapper, avoid losing all the attribute set by swipe
+        // XXX the component should have a wrapper, avoid losing all the attribute set by Swipe
         return (
           <div className="lazy-image" src={src}>
             {loaded ? <img src={src} /> : <span src={src}>loading</span>}{' '}
@@ -172,7 +172,7 @@ describe('ReactSwipe', () => {
     expect(div.querySelectorAll('img[src="img2"]').length).toBe(0);
     expect(div.querySelectorAll('span[src="img2"]').length).toBe(2);
 
-    // update LazyImage state by timer
+    // update LazyProduct state by timer
     jest.runAllTimers();
 
     expect(div.outerHTML).toMatchSnapshot();
