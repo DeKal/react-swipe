@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Swipe from 'swipe-js-iso';
-import objectAssign from 'object-assign';
 
 class ReactSwipe extends Component {
   static propTypes = {
@@ -58,9 +57,12 @@ class ReactSwipe extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { swipeKey } = this.props;
+    const { swipeKey, children } = this.props;
 
-    if (prevProps.swipeKey !== swipeKey) {
+    if (
+      prevProps.swipeKey !== swipeKey ||
+      (children.length == 2 && prevProps.children !== children)
+    ) {
       // just setup again
       this.swipe.setup();
     }
@@ -91,8 +93,37 @@ class ReactSwipe extends Component {
     return this.swipe.getNumSlides();
   }
 
+  renderChildren() {
+    const { children, style } = this.props;
+
+    if (!children) {
+      return null;
+    }
+
+    const childCount = children.length;
+    let allChildren = children;
+
+    if (childCount === 2) {
+      // special case, we dupplicate the children to avoid outdated cloning in swipe.js
+      allChildren = [...children, ...children];
+    }
+
+    return React.Children.map(allChildren, child => {
+      if (!child) {
+        return null;
+      }
+
+      return React.cloneElement(child, {
+        style: {
+          ...style.child,
+          ...child.props.style
+        }
+      });
+    });
+  }
+
   render() {
-    const { id, className, style, children } = this.props;
+    const { id, className, style } = this.props;
 
     return (
       <div
@@ -103,19 +134,7 @@ class ReactSwipe extends Component {
         className={`react-swipe-container ${className}`}
         style={style.container}
       >
-        <div style={style.wrapper}>
-          {React.Children.map(children, child => {
-            if (!child) {
-              return null;
-            }
-
-            const childStyle = child.props.style
-              ? objectAssign({}, style.child, child.props.style)
-              : style.child;
-
-            return React.cloneElement(child, { style: childStyle });
-          })}
-        </div>
+        <div style={style.wrapper}>{this.renderChildren()}</div>
       </div>
     );
   }
