@@ -1,27 +1,25 @@
 {
-  parser: "babel-eslint",
+  "parser": "babel-eslint",
 
-  extends: "eslint:recommended",
+  "extends": "eslint:recommended",
 
-  env: {
+  "env": {
     "es6": true,
     "node": true,
-    "browser": true
+    "browser": true,
+    "jest": true
   },
 
-  plugins: [
-    "react",
-    "import"
-  ],
+  "plugins": ["react", "import"],
 
-  settings: {
+  "settings": {
     "import/resolver": "node"
   },
 
-  rules: {
+  "rules": {
     "strict": 0,
     "quotes": [2, "single"],
-    "indent": [2, 2, {SwitchCase: 1}],
+    "indent": [2, 2, { "SwitchCase": 1 }],
     "semi": [2, "always"],
     "no-underscore-dangle": 0,
     "no-unused-vars": 1,
@@ -59,7 +57,11 @@
     "no-void": 0,
     "func-names": 0,
     "no-nested-ternary": 0,
-    "quote-props": [2, "consistent-as-needed", { "keywords": false, "unnecessary": true, "numbers": false }],
+    "quote-props": [
+      2,
+      "consistent-as-needed",
+      { "keywords": false, "unnecessary": true, "numbers": false }
+    ],
     "space-infix-ops": 0,
     "prefer-const": 0,
     "prefer-template": 0,
