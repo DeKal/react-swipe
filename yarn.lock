@@ -5141,9 +5141,9 @@ supports-color@^5.3.0:
   dependencies:
     has-flag "^3.0.0"
 
-"swipe-js-iso@git+https://github.com/thonglh/swipe-js-iso#2.0.6":
+"swipe-js-iso@git+https://github.com/thonglh/swipe-js-iso#2.0.7":
   version "2.0.4"
-  resolved "git+https://github.com/thonglh/swipe-js-iso#0b2db88a8c10ba84bf0fc44809092f4077fa28c5"
+  resolved "git+https://github.com/thonglh/swipe-js-iso#6ac985e2bfd9929552a48cfbf27394649a7d4649"
 
 symbol-tree@^3.2.2:
   version "3.2.2"
