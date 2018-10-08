@@ -1,6 +1,6 @@
 {
   "name": "react-swipe",
-  "version": "5.1.1",
+  "version": "6.2.0",
   "description": "Brad Birdsall's Swipe.js, as a React component",
   "homepage": "https://github.com/voronianski/react-swipe",
   "keywords": [
@@ -22,7 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "prop-types": "^15.6.0",
-    "swipe-js-iso": "git+https://github.com/thonglh/swipe-js-iso#2.0.7"
+    "swipe-js-iso": "git+https://github.com/thonglh/swipe-js-iso#2.0.8"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
