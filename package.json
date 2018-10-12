@@ -22,7 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "prop-types": "^15.6.0",
-    "swipe-js-iso": "git+https://github.com/thonglh/swipe-js-iso#2.0.8"
+    "swipe-js-iso": "git+https://github.com/thonglh/swipe-js-iso#2.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
