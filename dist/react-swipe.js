@@ -402,12 +402,13 @@ var ReactSwipe = function (_Component) {
         allChildren = [].concat(_toConsumableArray(children), _toConsumableArray(children));
       }
 
-      return _react2.default.Children.map(allChildren, function (child) {
+      return _react2.default.Children.map(allChildren, function (child, idx) {
         if (!child) {
           return null;
         }
 
         return _react2.default.cloneElement(child, {
+          key: idx,
           style: _extends({}, style.child, child.props.style)
         });
       });

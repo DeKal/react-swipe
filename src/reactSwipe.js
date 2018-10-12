@@ -108,12 +108,13 @@ class ReactSwipe extends Component {
       allChildren = [...children, ...children];
     }
 
-    return React.Children.map(allChildren, child => {
+    return React.Children.map(allChildren, (child, idx) => {
       if (!child) {
         return null;
       }
 
       return React.cloneElement(child, {
+        key: idx,
         style: {
           ...style.child,
           ...child.props.style
